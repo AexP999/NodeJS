@@ -91,11 +91,52 @@
 const express = require('express');
 const expressHbs = require('express-handlebars');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const userArrPath = path.join(__dirname, 'bd', 'usersArr.json');
+
+app.set('view engine', '.hbs'); //49:00
+app.engine(
+	'.hbs',
+	expressHbs({
+		defaultLayout: false
+	})
+); //49:00
+app.set('views', path.join(__dirname, 'static')); //49:00
+
+app.use(express.static(path.join(__dirname, 'static'))); //54 сделали публичную папку
+
+// --------------------------UserData--------------------
+
+let newUser = { name: 'Jho', age: 24, password: 123 };
+
+fs.readFile(userArrPath, (err, data) => {
+	if (err) {
+		console.log(err);
+		return;
+	}
+	let users = JSON.parse(data);
+	console.log('users', users);
+	users.push(newUser);
+	fs.writeFile(userArrPath, JSON.stringify(users), (err) => {
+		if (err) {
+			console.log(err);
+		}
+	});
+});
+// --------------------------UserData--------------------
+
+// --------------------------Pages--------------------
+
+app.get('/login', (req, res) => {
+	res.render('login'); //к if login.hbs
+});
+
+// --------------------------Pages--------------------
 app.listen(3000, () => {
 	console.log('App listen 3000');
 });
