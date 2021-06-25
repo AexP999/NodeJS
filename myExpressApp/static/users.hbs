@@ -9,17 +9,20 @@
 </head>
 <body>
 
-   Haaaloo
-<br>
-{{!-- +++ 1:01   +++ --}}
-{{#each users}}   
-{{!-- this  -  users[i] --}}
-   <div class="name">{{this.name}}<span class="age">{{this.age}}</span>  </div>
+
+
+{{#each users }}   
+
+   <div class="name">
+      <div class="age">Name: {{this.name}}</div> 
+      <div class="age">age: {{this.age}}</div>  
+      <div class="age">password: {{this.password}}</div>  
+   </div>
    
 {{/each}}
 
 <br>
-{{name}}
+
 
 </body>
 </html>

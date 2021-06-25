@@ -1,7 +1,8 @@
 .name {
-	color: green;
+	display: flex;
+	border: 1px solid blue;
+	margin: 5px;
 }
 .age {
-	border: 1px solid blue;
-	margin-left: 10px;
+	margin: 5px 10px;
 }
