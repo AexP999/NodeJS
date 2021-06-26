@@ -1,11 +1,1 @@
-[
-	{ "name": "Dima", "age": 22, "password": "pass0" },
-	{ "name": "Vika", "age": 18, "password": "pass1" },
-	{ "name": "Cvrystina", "age": 16, "password": "pass2" },
-	{ "name": "Viktor", "age": 25, "password": "pass3" },
-	{ "name": "Jho", "age": 24, "password": 123 },
-	{ "name": "Dimaerfe", "password": "dffsd" },
-	{ "name": "Jhonson", "password": "dffssadsaw1d" },
-	{ "name": "Vasya", "password": "pass17" },
-	{ "name": "Frank", "password": "ww3d3" }
-]
+[{"name":"Dima","age":22,"password":"pass0"},{"name":"Vika","age":18,"password":"pass1"},{"name":"Cvrystina","age":16,"password":"pass2"},{"name":"Viktor","age":25,"password":"pass3"},{"name":"Jho","age":24,"password":123},{"name":"Dimaerfe","password":"dffsd"},{"name":"Jhonson","password":"dffssadsaw1d"},{"name":"Vasya","password":"pass17"},{"name":"Frank","password":"ww3d3"},{"name":"Damon","password":"pass20"}]
