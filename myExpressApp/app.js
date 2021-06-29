@@ -82,6 +82,20 @@ app.post('/register', (req, res) => {
 	addnewUser(newUser);
 });
 
+app.get('/login1', (req, res) => {
+	res.render('login', { isAdult: false });
+});
+
+app.post('/login1', (req, res) => {
+	console.log('________________________');
+	console.log(req.body);
+	console.log(req.query);
+	console.log(req.params);
+	console.log('________________________');
+
+	res.json('OK');
+});
+
 app.get('/users', (req, res) => {
 	res.render('users', { users });
 });
