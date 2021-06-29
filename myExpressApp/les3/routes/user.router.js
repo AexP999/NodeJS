@@ -1,19 +1,14 @@
 const router = require('express').Router();
+const userController = require('../controllers/user.controller');
 
-router.get('/user', (req, res) => {
+router.get('/', (req, res) => {
 	res.json([ { name: 'Anton' } ]);
 });
 
-router.post('/user', (req, res) => {
-	res.json('success');
-});
+router.post('/', userController.getAllUsers);
 
-router.delete('/user/:userId', (req, res) => {
-	res.status(204).json('success');
-});
+router.delete('/:userId', userController.deleteUserById);
 
-router.get('/user/:userId', (req, res) => {
-	res.json('Dima');
-});
+router.get('/:userId', userController.getUserById);
 
 module.exports = router;
