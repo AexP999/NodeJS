@@ -1,4 +1,5 @@
 const userService = require('../services/user.service');
+const userRolesEnum = require('../constants/user-roles.enum');
 
 module.exports = {
 	checkIsUserPresent: (req, res, next) => {
@@ -11,6 +12,16 @@ module.exports = {
 		}
 
 		req.user = userById;
+
+		next();
+	},
+
+	checkIsAdminMiddleware: (req, res) => {
+		const { role } = req.user;
+
+		if (role !== userRolesEnum.ADMIN) {
+			throw new Error('Not admin');
+		}
 
 		next();
 	}
