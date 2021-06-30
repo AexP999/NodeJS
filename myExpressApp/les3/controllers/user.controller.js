@@ -1,4 +1,4 @@
-const userService = require('../services/user.service');
+const { userService } = require('../services');
 
 module.exports = {
 	getAllUsers: (req, res) => {
@@ -14,13 +14,20 @@ module.exports = {
 	},
 
 	deleteUserById: (req, res) => {
-		const { user } = req;
-
-		res.status(204).json(user);
+		const userId = Number(req.params.userId);
+		userService.deleteSomeUserById(userId);
+		res.json('deleted successfull');
 	},
+
 	getUserById: (req, res) => {
 		const { user } = req;
 
 		res.json(user);
+	},
+
+	updateUserById: (req, res) => {
+		const { user } = req;
+
+		res.status(204).json(user);
 	}
 };

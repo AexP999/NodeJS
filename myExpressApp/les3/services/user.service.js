@@ -1,11 +1,17 @@
-const db = require('../dataBase/users');
+const { users } = require('../dataBase');
 
 module.exports = {
-	findAll: () => db,
+	findAll: () => users,
 
 	insertUser: (userObject) => {
-		db.push(userObject);
+		users.push(userObject);
 	},
 
-	findOneById: (userId) => db[userId]
+	findOneById: (userId) => users[userId],
+
+	deleteSomeUserById: (userId) => {
+		console.log(users);
+		users.splice(userId, 1);
+		console.log(users);
+	}
 };
