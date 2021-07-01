@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -20,7 +21,6 @@ app.use('/users', userRouter);
 app.use(_handleErrors);
 
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
   console.log(`App listen ${port} `);
 });
 
