@@ -1046,3 +1046,9 @@ myExpressApp/node_modules/handlebars/dist/cjs/handlebars/internal/wrapHelper.js
 myExpressApp/node_modules/handlebars/lib/handlebars.js
 myExpressApp/node_modules/handlebars/lib/handlebars.runtime.js
 myExpressApp/node_modules/
+myExpressApp/HW4/node_modules/.bin/acorn
+*node_modules
+myExpressApp/HW4/package.json
+.gitignore
+.vscode/settings.json
+myExpressApp/HW4/package-lock.json
