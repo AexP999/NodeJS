@@ -31,13 +31,6 @@ function _handleErrors(err, req, res) {
   });
 }
 
-// function _notFoundHandler(err, req, res, next) {
-//   next({
-//     status: err.status || 404,
-//     message: err.message || 'Rout not fond'
-//   });
-// }
-
 function _mongooseConnector() {
   mongoose.connect('mongodb://localhost:27017/Les1', {
     useNewUrlParser: true,
