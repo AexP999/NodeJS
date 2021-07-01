@@ -2,10 +2,10 @@ const { responseCodesEnum } = require('../constants');
 const { User } = require('../dataBase');
 
 module.exports = {
-  getAllUsers: async (req, res, next) => {
+ 	 getAllUsers: async (req, res, next) => {
     try {
       const users = await User.find({});
-      res.status(responseCodesEnum.SUCCESS).json(users);
+      res.status(responseCodesEnum.SUCCESS).json(users)
     } catch (error) {
       next(error);
     }
