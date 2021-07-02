@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 const express = require('express');
 const mongoose = require('mongoose');
 
 const { constants } = require('./constants');
-const { userRouter } = require('./routes');
+const { userRouter, userAuthRouter } = require('./routes');
 
 const app = express();
 
@@ -14,11 +13,12 @@ const port = constants.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/auth', userRouter);
+app.use('/auth', userAuthRouter);
 app.use('/users', userRouter);
 app.use(_handleErrors);
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`App listen ${port} `);
 });
 

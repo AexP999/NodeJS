@@ -1,4 +1,3 @@
-const userRolesEnum = require('../constants');
 const { User } = require('../dataBase');
 const { userValidator } = require('../validators/user');
 
@@ -14,20 +13,6 @@ module.exports = {
       }
 
       req.user = userById;
-
-      next();
-    } catch (e) {
-      next(e);
-    }
-  },
-
-  checkIsAdminMiddleware: (req, res, next) => {
-    try {
-      const { role } = req.user;
-
-      if (role !== userRolesEnum.ADMIN) {
-        throw new Error('Not admin');
-      }
 
       next();
     } catch (e) {

@@ -13,6 +13,4 @@ router.put('/:userId', userMiddleware.checkUserValidity, userMiddleware.checkIsU
 
 router.get('/:userId', userMiddleware.checkIsUserPresent, userController.getUserById);
 
-router.post('/auth', userMiddleware.checkUserValidity, userMiddleware.checkIsEmailExist, userController.authUser);
-
 module.exports = router;
