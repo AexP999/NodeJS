@@ -17,8 +17,6 @@ module.exports = {
 
       res.json('OK');
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
       res.json(e.message);
     }
   }
