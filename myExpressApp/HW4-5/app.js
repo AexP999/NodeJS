@@ -15,8 +15,9 @@ const port = constants.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'static')));
+// app.use(express.static(path.join(__dirname, 'static')));
 
+app.use('/auth', userRouter);
 app.use('/users', userRouter);
 app.use(_handleErrors);
 

@@ -1,11 +1,12 @@
 const { responseCodesEnum } = require('../constants');
 const { User } = require('../dataBase');
+const { passwordHasher } = require('../helpers');
 
 module.exports = {
- 	 getAllUsers: async (req, res, next) => {
+  getAllUsers: async (req, res, next) => {
     try {
       const users = await User.find({});
-      res.status(responseCodesEnum.SUCCESS).json(users)
+      res.status(responseCodesEnum.SUCCESS).json(users);
     } catch (error) {
       next(error);
     }
@@ -13,8 +14,12 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
-      await User.create(req.body);
-      res.status(responseCodesEnum.NO_CONTENT).json('created successfull');
+      const { password } = req.body;
+      const hashedPassword = await passwordHasher.hash(password);
+
+      const createdUser = await User.create({ ...req.body, password: hashedPassword });
+
+      res.status(responseCodesEnum.CREATED).json(createdUser);
     } catch (error) {
       next(error);
     }
@@ -51,6 +56,26 @@ module.exports = {
       res.status(responseCodesEnum.UPDATED_SUCCESSFULL).json('update successfull');
     } catch (error) {
       next(error);
+    }
+  },
+
+  authUser: async (req, res) => {
+    try {
+      const { password, email } = req.body;
+
+      const userByEmail = await User.findOne({ email }).select('+password');
+
+      if (!userByEmail) {
+        throw new Error('No email');
+      }
+
+      await passwordHasher.compare(userByEmail.password, password);
+
+      res.json('OK');
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+      res.json(e.message);
     }
   }
 };
