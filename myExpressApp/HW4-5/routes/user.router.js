@@ -9,7 +9,9 @@ router.post('/', userMiddleware.checkUserValidity, userMiddleware.checkIsEmailEx
 
 router.delete('/:userId', userMiddleware.checkIsUserPresent, userController.deleteUserById);
 
-router.put('/:userId', userMiddleware.checkUserValidity, userMiddleware.checkIsUserPresent, userController.updateUserById);
+router.put('/:userId',
+  // userMiddleware.checkUserValidity, userMiddleware.checkIsUserPresent,
+  userController.updateUserById);
 
 router.get('/:userId', userMiddleware.checkIsUserPresent, userController.getUserById);
 

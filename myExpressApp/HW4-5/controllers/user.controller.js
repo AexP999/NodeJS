@@ -47,12 +47,9 @@ module.exports = {
   updateUserById: async (req, res, next) => {
     try {
       const { userId } = req.params;
-      const userEmail = req.body.email;
-      const userAge = req.body.age;
-      const userName = req.body.name;
-      const updatedUser = { name: userName, age: userAge, email: userEmail };
+      const { name, age, email } = req.body;
 
-      await User.findByIdAndUpdate(userId, updatedUser, { new: true });
+      await User.findByIdAndUpdate(userId, { name, age, email }, { new: true });
       res.status(responseCodesEnum.UPDATED_SUCCESSFULL).json('update successfull');
     } catch (error) {
       next(error);
