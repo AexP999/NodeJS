@@ -1,5 +1,5 @@
 const { User } = require('../dataBase');
-const { userValidator } = require('../validators/user');
+const { userValidator, userPutValidator } = require('../validators/user');
 
 module.exports = {
   checkIsUserPresent: async (req, res, next) => {
@@ -23,6 +23,19 @@ module.exports = {
   checkUserValidity: (req, res, next) => {
     try {
       const { error } = userValidator.createUser.validate(req.body);
+
+      if (error) {
+        throw new Error(error.details[0].message);
+      }
+
+      next();
+    } catch (e) {
+      next(e);
+    }
+  },
+  checkUserUpdateValidity: (req, res, next) => {
+    try {
+      const { error } = userPutValidator.updateUser.validate(req.body);
 
       if (error) {
         throw new Error(error.details[0].message);
