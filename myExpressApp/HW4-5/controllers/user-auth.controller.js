@@ -1,23 +1,60 @@
-// const { responseCodesEnum } = require('../constants');
-const { User } = require('../dataBase');
-const { passwordHasher } = require('../helpers');
+const { errorMessages } = require('../errors');
+
+const { responseCodesEnum } = require('../constants');
+const { OAuth } = require('../dataBase');
+const { authService } = require('../services');
 
 module.exports = {
-  authUser: async (req, res) => {
+  userLogin: async (req, res, next) => {
     try {
-      const { password, email } = req.body;
+      const { user, user: { _id } } = req;
 
-      const userByEmail = await User.findOne({ email }).select('+password');
+      const tokens = authService.generateTokenPair();
 
-      if (!userByEmail) {
-        throw new Error('No email');
-      }
+      await OAuth.create({
+        ...tokens,
+        user: _id
+      });
 
-      await passwordHasher.compare(userByEmail.password, password);
-
-      res.json('OK');
+      res.json({ ...tokens, user });
     } catch (e) {
-      res.json(e.message);
+      next(e);
+    }
+  },
+
+  userLogout: async (req, res, next) => {
+    try {
+      const token = req.get('Authorization');
+
+      await OAuth.remove({ access_Token: token });
+
+      res.status(responseCodesEnum.DELETED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_REMOVED.message);
+    } catch (e) {
+      next(e);
+    }
+  },
+
+  userRefresh: async (req, res, next) => {
+    try {
+      const token = req.get('Authorization');
+
+      await OAuth.deleteOne({ refresh_Token: token });
+
+      const updatedTokens = authService.generateTokenPair();
+
+      const { _id } = req.user;
+
+      await OAuth.create({
+        ...updatedTokens,
+        user: _id
+      });
+
+      res.json({
+        ...updatedTokens,
+        user: req.user
+      });
+    } catch (e) {
+      next(e);
     }
   }
 };

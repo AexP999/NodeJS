@@ -1,2 +1,2 @@
-module.exports.errorMessage = ('./error-messages.js');
-module.exports.ErrorHandler = ('./ErrorHandler.js');
+module.exports.ErrorHandler = require('./ErrorHandler');
+module.exports.errorMessages = require('./error-messages');

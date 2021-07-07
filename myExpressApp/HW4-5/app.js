@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const { constants } = require('./constants');
 const { userRouter, userAuthRouter } = require('./routes');
@@ -30,7 +31,7 @@ function _handleErrors(err, req, res) {
 }
 
 function _mongooseConnector() {
-  mongoose.connect('mongodb://localhost:27017/Les1', {
+  mongoose.connect(constants.DB_CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });

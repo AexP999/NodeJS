@@ -4,7 +4,7 @@ const { regexp } = require('../../constants');
 
 module.exports = {
   authUser: Joi.object().keys({
-    email: Joi.string().regex(regexp.EMAIL_REGEXP),
-    password: Joi.string()
+    email: Joi.string().regex(regexp.EMAIL_REGEXP).required(),
+    password: Joi.string().min(2).max(50).required()
   })
 };
