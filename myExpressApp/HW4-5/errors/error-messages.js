@@ -1,6 +1,6 @@
 module.exports = {
-  RECORD_NOT_FOUND: {
-    message: 'Record not found',
+  USER_NOT_FOUND: {
+    message: 'User not found',
     code: '404.1'
   },
 

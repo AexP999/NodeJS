@@ -11,7 +11,11 @@ module.exports = {
       const userById = await User.findById(userId);
 
       if (!userById) {
-        throw new Error('user not found');
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          errorMessages.USER_NOT_FOUND.message,
+          errorMessages.USER_NOT_FOUND.code
+        );
       }
 
       req.user = userById;
