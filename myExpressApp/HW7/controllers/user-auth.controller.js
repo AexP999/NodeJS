@@ -1,13 +1,14 @@
 const { errorMessages } = require('../errors');
-
 const { responseCodesEnum } = require('../constants');
 const { OAuth } = require('../dataBase');
-const { authService } = require('../services');
+const { authService, mailService } = require('../services');
 
 module.exports = {
   userLogin: async (req, res, next) => {
     try {
-      const { user, user: { _id } } = req;
+      const { user, user: { _id, email } } = req;
+
+      await mailService.sendMail(email);
 
       const tokens = authService.generateTokenPair();
 

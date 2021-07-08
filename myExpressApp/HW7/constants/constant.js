@@ -5,4 +5,6 @@ module.exports = {
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || 'refresh_secret_word',
   ACCESS_TOKEN_EXP_TIME: '10m',
   REFRESH_TOKEN_EXP_TIME: '10d',
+  SYSTEMS_EMAIL: process.env.SYSTEMS_EMAIL || 'test@a.com.ua',
+  SYSTEMS_EMAIL_PASSWORD: process.env.SYSTEMS_EMAIL_PASSWORD || '12345',
 };
