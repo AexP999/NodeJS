@@ -4,6 +4,7 @@ const { userAuthValidator } = require('../validators/user');
 const { errorMessages, ErrorHandler } = require('../errors');
 const { authService } = require('../services');
 const { passwordHasher } = require('../helpers');
+const { constants: { TOKEN_TYPE } } = require('../constants');
 
 module.exports = {
 
@@ -12,7 +13,7 @@ module.exports = {
       const { error } = userAuthValidator.authUser.validate(req.body);
 
       if (error) {
-        throw new Error(error.details[0].message);
+        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
       }
 
       next();
@@ -86,12 +87,15 @@ module.exports = {
         );
       }
 
-      await authService.verifyToken(token, 'refresh');
+      await authService.verifyToken(token, TOKEN_TYPE.REFRESH);
 
       const tokenObj = await OAuth.findOne({ refresh_Token: token });
 
       if (!tokenObj) {
-        throw new ErrorHandler(errorMessages.WRONG_TOKEN.code, errorMessages.WRONG_TOKEN.message);
+        throw new ErrorHandler(
+          errorMessages.WRONG_TOKEN.code,
+          errorMessages.WRONG_TOKEN.message
+        );
       }
 
       req.user = tokenObj.user;

@@ -19,4 +19,14 @@ module.exports = {
     code: '401'
   },
 
+  WRONG_DATA: {
+    message: 'Wrong Data ',
+    code: '400'
+  },
+
+  EMAIL_ALREADY_EXIST: {
+    message: 'User with this email is already exist',
+    code: '401.7'
+  },
+
 };

@@ -1,5 +1,5 @@
 const { errorMessages } = require('../errors');
-
+const { constants: { AUTHORIZATION } } = require('../constants');
 const { responseCodesEnum } = require('../constants');
 const { OAuth } = require('../dataBase');
 const { authService } = require('../services');
@@ -24,9 +24,9 @@ module.exports = {
 
   userLogout: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
-      await OAuth.remove({ access_Token: token });
+      await OAuth.deleteOne({ access_Token: token });
 
       res.status(responseCodesEnum.DELETED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_REMOVED.message);
     } catch (e) {
@@ -36,7 +36,7 @@ module.exports = {
 
   userRefresh: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
       await OAuth.deleteOne({ refresh_Token: token });
 

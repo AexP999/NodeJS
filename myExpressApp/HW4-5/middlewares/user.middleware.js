@@ -1,5 +1,7 @@
-const { User } = require('../dataBase');
+const { errorMessages, ErrorHandler } = require('../errors');
+const { responseCodesEnum } = require('../constants');
 const { userValidator, userPutValidator } = require('../validators/user');
+const { User } = require('../dataBase');
 
 module.exports = {
   checkIsUserPresent: async (req, res, next) => {
@@ -25,7 +27,7 @@ module.exports = {
       const { error } = userValidator.createUser.validate(req.body);
 
       if (error) {
-        throw new Error(error.details[0].message);
+        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
       }
 
       next();
@@ -38,7 +40,7 @@ module.exports = {
       const { error } = userPutValidator.updateUser.validate(req.body);
 
       if (error) {
-        throw new Error(error.details[0].message);
+        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
       }
 
       next();
@@ -54,7 +56,12 @@ module.exports = {
       const userByEmail = await User.findOne({ email });
 
       if (userByEmail) {
-        throw new Error('User with this email is already exist');
+        // eslint-disable-next-line max-len
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          errorMessages.EMAIL_ALREADY_EXIST.message,
+          errorMessages.EMAIL_ALREADY_EXIST.code
+        );
       }
 
       next();
