@@ -6,14 +6,22 @@
 		"start": "node ./bin/www"
 	},
 	"dependencies": {
+		"@types/nodemailer": "6.4.3",
+		"bcrypt": "^5.0.1",
 		"cookie-parser": "~1.4.4",
 		"debug": "~2.6.9",
+		"dotenv": "^10.0.0",
+		"email-templates": "^8.0.7",
 		"express": "~4.16.1",
 		"express-handlebars": "^5.3.2",
-		"mongoose": "^5.13.0"
+		"joi": "^17.4.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.13.0",
+		"nodemailer": "^6.6.2",
+		"pug": "^3.0.2"
 	},
 	"devDependencies": {
-		"eslint": "^7.14.0",
+		"eslint": "^7.29.0",
 		"eslint-config-airbnb-base": "^14.2.1",
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-node": "^11.1.0",
@@ -23,7 +31,10 @@
 		"nodemon": "^2.0.7"
 	},
 	"lint-staged": {
-		"*.{js, json}": [ "eslint", "git add" ]
+		"*.{js, json}": [
+			"eslint",
+			"git add"
+		]
 	},
 	"husky": {
 		"hooks": {

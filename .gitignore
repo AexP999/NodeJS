@@ -1,7 +1,6 @@
 myExpressApp/array.js
 myExpressApp/index.js
-myExpressApp/package-lock.json
-myExpressApp/package.json
+
 myExpressApp/yarn.lock
 myExpressApp/bin/www
 myExpressApp/node_modules/.yarn-integrity
