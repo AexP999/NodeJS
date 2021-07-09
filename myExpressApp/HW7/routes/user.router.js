@@ -11,14 +11,14 @@ router.post('/',
   userController.createUser);
 
 router.delete('/:userId',
-  userMiddleware.checkIsUserPresent,
   userAuthMiddleware.checkingAccessToken,
+  userMiddleware.checkIsUserPresent,
   userController.deleteUserById);
 
 router.put('/:userId',
+  userAuthMiddleware.checkingAccessToken,
   userMiddleware.checkUserUpdateValidity,
   userMiddleware.checkIsUserPresent,
-  userAuthMiddleware.checkingAccessToken,
   userController.updateUserById);
 
 router.get('/:userId', userMiddleware.checkIsUserPresent, userController.getUserById);
