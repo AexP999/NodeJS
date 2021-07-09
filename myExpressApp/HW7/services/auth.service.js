@@ -6,7 +6,8 @@ const {
     ACCESS_TOKEN_SECRET,
     REFRESH_TOKEN_SECRET,
     ACCESS_TOKEN_EXP_TIME,
-    REFRESH_TOKEN_EXP_TIME
+    REFRESH_TOKEN_EXP_TIME,
+    TOKEN_TYPE
   }
 } = require('../constants');
 
@@ -20,8 +21,8 @@ module.exports = {
     return { access_Token, refresh_Token };
   },
 
-  verifyToken: async (token, tokenType = 'access') => {
-    const secretTokenWord = tokenType === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
+  verifyToken: async (token, tokenType = TOKEN_TYPE.ACCESS) => {
+    const secretTokenWord = tokenType === TOKEN_TYPE.ACCESS ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
 
     await verifyPromise(token, secretTokenWord);
   }

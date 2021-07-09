@@ -9,6 +9,7 @@ module.exports = {
       const { user, user: { _id, email } } = req;
 
       await mailService.sendMail(email);
+      console.log('email', email);
 
       const tokens = authService.generateTokenPair();
 
