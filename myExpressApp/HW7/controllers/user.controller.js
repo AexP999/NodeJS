@@ -1,8 +1,7 @@
-const { emailActions } = require('../constants');
+const { emailActions, responseCodesEnum } = require('../constants');
 const { errorMessages } = require('../errors');
 const { mailService } = require('../services');
 const { passwordHasher } = require('../helpers');
-const { responseCodesEnum } = require('../constants');
 const { User } = require('../dataBase');
 
 module.exports = {
