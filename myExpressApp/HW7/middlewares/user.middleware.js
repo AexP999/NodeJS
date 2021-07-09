@@ -26,6 +26,28 @@ module.exports = {
     }
   },
 
+  checkAccessToking: async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+
+      const userById = await User.findById(userId);
+
+      if (!userById) {
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          errorMessages.USER_NOT_FOUND.message,
+          errorMessages.USER_NOT_FOUND.code
+        );
+      }
+
+      req.user = userById;
+
+      next();
+    } catch (e) {
+      next(e);
+    }
+  },
+
   checkUserValidity: (req, res, next) => {
     try {
       const { error } = userValidator.createUser.validate(req.body);

@@ -2,7 +2,7 @@ const { authService } = require('../services');
 const { errorMessages, ErrorHandler } = require('../errors');
 const { responseCodesEnum } = require('../constants');
 const { passwordHasher } = require('../helpers');
-const { constants: { TOKEN_TYPE } } = require('../constants');
+const { constants: { TOKEN_TYPE, AUTHORIZATION } } = require('../constants');
 const { userAuthValidator } = require('../validators/user');
 const { User, OAuth } = require('../dataBase');
 
@@ -52,7 +52,7 @@ module.exports = {
 
   checkingAccessToken: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
       if (!token) {
         throw new ErrorHandler(
@@ -83,7 +83,7 @@ module.exports = {
 
   checkingRefreshToken: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
       if (!token) {
         throw new ErrorHandler(

@@ -33,7 +33,7 @@ module.exports = {
   deleteUserById: async (req, res, next) => {
     try {
       const { userId } = req.params;
-      const { name, email } = req.body;
+      const { name, email } = req.user;
 
       await User.findByIdAndDelete(userId);
 
