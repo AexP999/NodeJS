@@ -31,7 +31,11 @@ module.exports = {
       const { error } = userValidator.createUser.validate(req.body);
 
       if (error) {
-        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          error.details[0].message,
+          errorMessages.WRONG_DATA.code
+        );
       }
 
       next();
@@ -44,7 +48,11 @@ module.exports = {
       const { error } = userPutValidator.updateUser.validate(req.body);
 
       if (error) {
-        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          error.details[0].message,
+          errorMessages.WRONG_DATA.code
+        );
       }
 
       next();

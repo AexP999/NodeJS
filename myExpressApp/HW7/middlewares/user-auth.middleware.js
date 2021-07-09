@@ -1,10 +1,10 @@
-const { responseCodesEnum } = require('../constants');
-const { User, OAuth } = require('../dataBase');
-const { userAuthValidator } = require('../validators/user');
-const { errorMessages, ErrorHandler } = require('../errors');
 const { authService } = require('../services');
+const { errorMessages, ErrorHandler } = require('../errors');
+const { responseCodesEnum } = require('../constants');
 const { passwordHasher } = require('../helpers');
 const { constants: { TOKEN_TYPE } } = require('../constants');
+const { userAuthValidator } = require('../validators/user');
+const { User, OAuth } = require('../dataBase');
 
 module.exports = {
 
@@ -13,7 +13,11 @@ module.exports = {
       const { error } = userAuthValidator.authUser.validate(req.body);
 
       if (error) {
-        throw new ErrorHandler(responseCodesEnum.BAD_REQUEST, error.details[0].message, errorMessages.WRONG_DATA.code);
+        throw new ErrorHandler(
+          responseCodesEnum.BAD_REQUEST,
+          error.details[0].message,
+          errorMessages.WRONG_DATA.code
+        );
       }
 
       next();
@@ -32,7 +36,9 @@ module.exports = {
       if (!user) {
         throw new ErrorHandler(
           // eslint-disable-next-line max-len
-          responseCodesEnum.WRONG_PASSWORD_OR_EMAIL, errorMessages.WRONG_EMAIL_OR_PASSWORD.message, errorMessages.WRONG_EMAIL_OR_PASSWORD.code
+          responseCodesEnum.WRONG_PASSWORD_OR_EMAIL,
+          errorMessages.WRONG_EMAIL_OR_PASSWORD.message,
+          errorMessages.WRONG_EMAIL_OR_PASSWORD.code
         );
       }
 

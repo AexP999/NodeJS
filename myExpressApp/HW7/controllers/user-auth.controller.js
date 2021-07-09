@@ -1,15 +1,16 @@
+const { authService } = require('../services');
+const { constants: { AUTHORIZATION }, emailActions } = require('../constants');
 const { errorMessages } = require('../errors');
-const { responseCodesEnum } = require('../constants');
+const { mailService } = require('../services');
 const { OAuth } = require('../dataBase');
-const { authService, mailService } = require('../services');
+const { responseCodesEnum } = require('../constants');
 
 module.exports = {
   userLogin: async (req, res, next) => {
     try {
-      const { user, user: { _id, email } } = req;
+      const { user, user: { _id, email, name } } = req;
 
-      await mailService.sendMail(email);
-      console.log('email', email);
+      await mailService.sendMail(email, emailActions.WELCOME, { userName: name });
 
       const tokens = authService.generateTokenPair();
 
@@ -26,9 +27,13 @@ module.exports = {
 
   userLogout: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      // const { user: { email } } = req;
 
-      await OAuth.remove({ access_Token: token });
+      const token = req.get(AUTHORIZATION);
+
+      await OAuth.deleteOne({ access_Token: token });
+
+      // await mailService.sendMail(email, emailActions.PASSWORD_CHANGED, { userName: 'Alex' });
 
       res.status(responseCodesEnum.DELETED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_REMOVED.message);
     } catch (e) {
@@ -38,7 +43,7 @@ module.exports = {
 
   userRefresh: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
       await OAuth.deleteOne({ refresh_Token: token });
 

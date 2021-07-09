@@ -1,6 +1,9 @@
+const { emailActions } = require('../constants');
+const { errorMessages } = require('../errors');
+const { mailService } = require('../services');
+const { passwordHasher } = require('../helpers');
 const { responseCodesEnum } = require('../constants');
 const { User } = require('../dataBase');
-const { passwordHasher } = require('../helpers');
 
 module.exports = {
   getAllUsers: async (req, res, next) => {
@@ -14,10 +17,13 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
-      const { password } = req.body;
+      const { password, name, email } = req.body;
+
       const hashedPassword = await passwordHasher.hash(password);
 
       const createdUser = await User.create({ ...req.body, password: hashedPassword });
+
+      await mailService.sendMail(email, emailActions.ACCOUNT_CREATED, { userName: name });
 
       res.status(responseCodesEnum.CREATED).json(createdUser);
     } catch (error) {
@@ -28,8 +34,13 @@ module.exports = {
   deleteUserById: async (req, res, next) => {
     try {
       const { userId } = req.params;
+      const { name, email } = req.body;
+
       await User.findByIdAndDelete(userId);
-      res.status(responseCodesEnum.DELETED_SUCCESSFULL).json('deleted successfull');
+
+      await mailService.sendMail(email, emailActions.ACCOUNT_DELETED, { userName: name });
+
+      res.status(responseCodesEnum.DELETED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_DELETED);
     } catch (error) {
       next(error);
     }
@@ -50,7 +61,10 @@ module.exports = {
       const { name, age, email } = req.body;
 
       await User.findByIdAndUpdate(userId, { name, age, email }, { new: true });
-      res.status(responseCodesEnum.UPDATED_SUCCESSFULL).json('update successfull');
+
+      await mailService.sendMail(email, emailActions.ACCOUNT_CHANGED, { userName: name });
+
+      res.status(responseCodesEnum.UPDATED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_UPDATED);
     } catch (error) {
       next(error);
     }

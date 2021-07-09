@@ -5,7 +5,10 @@ const { userMiddleware } = require('../middlewares');
 
 router.get('/', userController.getAllUsers);
 
-router.post('/', userMiddleware.checkUserValidity, userMiddleware.checkIsEmailExist, userController.createUser);
+router.post('/',
+  userMiddleware.checkUserValidity,
+  userMiddleware.checkIsEmailExist,
+  userController.createUser);
 
 router.delete('/:userId', userMiddleware.checkIsUserPresent, userController.deleteUserById);
 
