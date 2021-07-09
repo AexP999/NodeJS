@@ -27,13 +27,9 @@ module.exports = {
 
   userLogout: async (req, res, next) => {
     try {
-      // const { user: { email } } = req;
-
       const token = req.get(AUTHORIZATION);
 
       await OAuth.deleteOne({ access_Token: token });
-
-      // await mailService.sendMail(email, emailActions.PASSWORD_CHANGED, { userName: 'Alex' });
 
       res.status(responseCodesEnum.DELETED_SUCCESSFULL).json(errorMessages.SUCCESSFULLY_REMOVED.message);
     } catch (e) {
