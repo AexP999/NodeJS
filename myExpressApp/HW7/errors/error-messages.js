@@ -39,4 +39,8 @@ module.exports = {
     code: '401'
   },
 
+  WRONG_TEMPLATE: {
+    message: 'Wrong Template ',
+    code: '407'
+  },
 };
