@@ -8,6 +8,11 @@ router.post('/login',
   userAuthMiddleware.checkUserAuthValidity,
   userAuthController.userLogin);
 
+router.post('/:userId/avatar',
+  // userAuthMiddleware.checkPassAndEmail,
+  // userAuthMiddleware.checkUserAuthValidity,
+  userAuthController.userLogin);
+
 router.post('/logout',
   userAuthMiddleware.checkingAccessToken,
   userAuthController.userLogout);

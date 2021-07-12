@@ -1,11 +1,16 @@
 const router = require('express').Router();
 
 const { userController } = require('../controllers');
-const { userMiddleware, userAuthMiddleware } = require('../middlewares');
+const {
+  userMiddleware,
+  userAuthMiddleware,
+  fileMiddleware
+} = require('../middlewares');
 
 router.get('/', userController.getAllUsers);
 
 router.post('/',
+  fileMiddleware.checkFilesForSizeAndType,
   userMiddleware.checkUserValidity,
   userMiddleware.checkIsEmailExist,
   userController.createUser);

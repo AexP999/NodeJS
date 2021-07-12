@@ -1,7 +1,11 @@
 const { emailActions, responseCodesEnum } = require('../constants');
 const { errorMessages } = require('../errors');
 const { mailService } = require('../services');
-const { passwordHasher } = require('../helpers');
+const {
+  passwordHasher,
+  fileDirCreator,
+  userNormalizeHelper
+} = require('../helpers');
 const { User } = require('../dataBase');
 
 module.exports = {
@@ -16,15 +20,41 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
-      const { password, name, email } = req.body;
+      const {
+        images,
+        body: {
+          email,
+          name,
+          password,
+        }
+      } = req;
+
+      let { avatar } = req;
+
+      if (!avatar) {
+        [avatar] = images;
+      }
 
       const hashedPassword = await passwordHasher.hash(password);
 
-      const createdUser = await User.create({ ...req.body, password: hashedPassword });
+      const newUser = await User.create({ ...req.body, password: hashedPassword });
 
-      await mailService.sendMail(email, emailActions.ACCOUNT_CREATED, { userName: name });
+      const { _id } = newUser;
 
-      res.status(responseCodesEnum.CREATED).json(createdUser);
+      if (avatar) {
+        // console.log('avatar.name', avatar.name, '_id', _id);
+        const { totalPath, imagePath } = await fileDirCreator.fileDC(avatar.name, _id, 'users');
+
+        await avatar.mv(totalPath);
+
+        await User.updateOne({ _id }, { avatar: imagePath });
+      }
+
+      // await mailService.sendMail(email, emailActions.ACCOUNT_CREATED, { userName: name });
+
+      const nolmalizedUser = userNormalizeHelper.userNormalizator(newUser.toJSON());
+
+      res.status(responseCodesEnum.CREATED).json(nolmalizedUser);
     } catch (error) {
       next(error);
     }

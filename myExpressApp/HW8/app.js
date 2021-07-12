@@ -1,5 +1,7 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
 
 const { constants } = require('./constants');
@@ -13,6 +15,9 @@ const port = constants.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'static')));
+
+app.use(fileUpload());
 
 app.use('/auth', userAuthRouter);
 app.use('/users', userRouter);
@@ -24,7 +29,7 @@ app.listen(port, () => {
 });
 
 // eslint-disable-next-line no-unused-vars
-function _handleErrors(err, req, res, next) {
+function _handleErrors(err, req, res) {
   res.status(err.status).json({
     message: err.message || 'Unknown error',
     customCode: err.code || 0,
