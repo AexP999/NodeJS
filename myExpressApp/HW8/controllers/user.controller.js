@@ -28,9 +28,9 @@ module.exports = {
 
       const avatarArr = [];
 
-      // if (!avatar[0]) {
-      //   avatar = images;
-      // }
+      if (!avatar[0]) {
+        avatar = images;
+      }
 
       const hashedPassword = await passwordHasher.hash(password);
 
