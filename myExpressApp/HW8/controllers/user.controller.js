@@ -22,18 +22,15 @@ module.exports = {
     try {
       const {
         images,
-        body: {
-          email,
-          name,
-          password,
-        }
+        files: { avatar },
+        body: { email, name, password, }
       } = req;
 
-      let { avatar } = req;
+      const avatarArr = [];
 
-      if (!avatar) {
-        [avatar] = images;
-      }
+      // if (!avatar[0]) {
+      //   avatar = images;
+      // }
 
       const hashedPassword = await passwordHasher.hash(password);
 
@@ -45,9 +42,10 @@ module.exports = {
         // console.log('avatar.name', avatar.name, '_id', _id);
         const { totalPath, imagePath } = await fileDirCreator.fileDC(avatar.name, _id, 'users');
 
+        avatarArr.push(imagePath);
         await avatar.mv(totalPath);
 
-        await User.updateOne({ _id }, { avatar: imagePath });
+        await User.updateOne({ _id }, { avatar: avatarArr });
       }
 
       // await mailService.sendMail(email, emailActions.ACCOUNT_CREATED, { userName: name });

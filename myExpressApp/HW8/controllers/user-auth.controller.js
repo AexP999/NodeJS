@@ -4,8 +4,32 @@ const { errorMessages } = require('../errors');
 const { mailService } = require('../services');
 const { OAuth } = require('../dataBase');
 const { responseCodesEnum } = require('../constants');
+const { User } = require('../dataBase');
+const { fileDirCreator } = require('../helpers');
 
 module.exports = {
+  userAddAvatar: async (req, res, next) => {
+    try {
+      const { userId: _id } = req.params;
+      const { files: { avatar } } = req;
+
+      const user = await User.findById(_id);
+      const avatarArr = user.avatar;
+
+      if (avatarArr) {
+        const { totalPath, imagePath } = await fileDirCreator.fileDC(avatar.name, _id, 'users');
+
+        avatarArr.push(imagePath);
+        await avatar.mv(totalPath);
+
+        await User.updateOne({ _id }, { avatar: avatarArr });
+      }
+      res.status(responseCodesEnum.CREATED).json(avatarArr);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   userLogin: async (req, res, next) => {
     try {
       const { user, user: { _id, email, name } } = req;

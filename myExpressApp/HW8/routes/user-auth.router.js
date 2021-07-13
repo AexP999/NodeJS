@@ -11,7 +11,7 @@ router.post('/login',
 router.post('/:userId/avatar',
   // userAuthMiddleware.checkPassAndEmail,
   // userAuthMiddleware.checkUserAuthValidity,
-  userAuthController.userLogin);
+  userAuthController.userAddAvatar);
 
 router.post('/logout',
   userAuthMiddleware.checkingAccessToken,
