@@ -1052,7 +1052,8 @@ myExpressApp/HW4/package.json
 .vscode/settings.json
 myExpressApp/HW4/package-lock.json
 .eslintrc.js
-myExpressApp/HW4-5/.env
+*.env
 myExpressApp/HW7/.env
 myExpressApp/HW8/.env
 myExpressApp/HW8/static
+*static
