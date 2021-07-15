@@ -11,12 +11,7 @@ router.get('/', async (req, res) => {
   let where = {};
 
   if (otherOption['age.gte']) {
-    where = {
-      ...where,
-      age: {
-        [Op.gte]: otherOption['age.gte']
-      }
-    };
+    where = { ...where, age: { [Op.gte]: otherOption['age.gte'] } };
   }
 
   //   const student = await Student.findAll({

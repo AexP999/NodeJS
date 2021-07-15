@@ -1,6 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
 
@@ -49,9 +49,9 @@ function _handleErrors(err, req, res, next) {
   });
 }
 
-function _mongooseConnector() {
-  mongoose.connect(constants.DB_CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-}
+// function _mongooseConnector() {
+//   mongoose.connect(constants.DB_CONNECTION_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   });
+// }
