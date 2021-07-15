@@ -5,11 +5,14 @@ const path = require('path');
 require('dotenv').config();
 
 const { constants } = require('./constants');
-const { userRouter, userAuthRouter } = require('./routes');
+const { userRouter, userAuthRouter, studentRouter } = require('./routes');
+const connection = require('./dataBase/MySQL');
+
+connection.getInstance().setModel();
 
 const app = express();
 
-_mongooseConnector();
+// _mongooseConnector();
 
 const port = constants.PORT;
 
@@ -19,6 +22,15 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 app.use(fileUpload());
 
+// app.get('/mysql', async (req, res) => {
+//   const newVar = await connection.query(`SELECT * FROM students WHERE id=${req.query.id}`);
+
+//   console.log('newVar', newVar[0]);
+
+//   res.json(newVar[0] && newVar[0][0]);
+// });
+
+app.use('/students', studentRouter);
 app.use('/auth', userAuthRouter);
 app.use('/users', userRouter);
 app.use(_handleErrors);
